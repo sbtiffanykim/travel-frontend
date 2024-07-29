@@ -18,6 +18,7 @@ import {
 import { useState } from 'react';
 import { FaAirbnb, FaUser, FaLock } from 'react-icons/fa';
 import { Outlet } from 'react-router-dom';
+import SocialLogin from './SocialLogin';
 
 export default function Root() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,9 +57,10 @@ export default function Root() {
                   </InputRightElement>
                 </InputGroup>
               </VStack>
-              <Button colorScheme='red' w='100%' my={5}>
+              <Button colorScheme='red' w='100%' mt={5}>
                 Log in
               </Button>
+              <SocialLogin />
             </ModalBody>
           </ModalContent>
         </Modal>
