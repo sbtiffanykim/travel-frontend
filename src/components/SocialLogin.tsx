@@ -1,6 +1,7 @@
 import { Box, Button, Divider, HStack, Text, VStack } from '@chakra-ui/react';
-import { FaGithub, FaComment, FaGoogle } from 'react-icons/fa';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { SiNaver } from 'react-icons/si';
+import { RiKakaoTalkFill } from 'react-icons/ri';
 
 export default function SocialLogin() {
   return (
@@ -54,7 +55,7 @@ export default function SocialLogin() {
           w='100%'
           textColor='gray.900'
           fontSize='sm'
-          leftIcon={<FaComment />}
+          leftIcon={<RiKakaoTalkFill />}
           variant='outline'
           bgColor={'white'}
           border='1px'
