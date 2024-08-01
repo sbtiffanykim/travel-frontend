@@ -1,7 +1,8 @@
-const BASE_URL = 'http://127.0.0.1:8000/api/v1/rooms';
+import axios from 'axios';
 
-export async function getRoomList(page: number) {
-  const response = await fetch(`${BASE_URL}?page=${page}`);
-  const data = await response.json();
-  return data;
-}
+const instance = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api/v1/',
+});
+
+export const getRoomList = (page: number) =>
+  instance.get(`rooms?page=${page}`).then((response) => response.data);
