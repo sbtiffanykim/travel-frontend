@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { Grid } from '@chakra-ui/react';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import Room from './Room';
 import RoomSkeleton from './RoomSkeleton';
-import { useEffect, useState } from 'react';
 import Paginator from './Paginator';
+import { getRoomList } from './api';
 
 interface IPhoto {
   pk: string;
@@ -34,41 +36,38 @@ interface ILinkInfo {
 }
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [linkInfo, setLinkInfo] = useState<ILinkInfo>({} as ILinkInfo);
-  const [rooms, setRooms] = useState<IRoom[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const baseURL = 'http://127.0.0.1:8000/api/v1/rooms';
-  const fetchRooms = async (url: string) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    setRooms(data.content);
-    setLinkInfo(data.page);
-    setIsLoading(false);
+  const { data, isLoading } = useQuery({
+    queryKey: ['roomListInfo', currentPage],
+    queryFn: () => getRoomList(currentPage),
+    placeholderData: keepPreviousData,
+  });
+
+  const linkInfo: ILinkInfo = data?.page ?? {
+    current_page: 1,
+    total_pages: 1,
+    next_link: null,
+    prev_link: null,
+    count: 1,
   };
+  const rooms: IRoom[] = data?.content ?? [];
+
   const goToPage = (page: number) => {
-    const url = `${baseURL}?page=${page}`;
-    setIsLoading(true);
-    fetchRooms(url);
+    setCurrentPage(page);
   };
 
   const goNextPage = () => {
     if (linkInfo.next_link) {
-      setIsLoading(true);
-      fetchRooms(linkInfo.next_link);
+      setCurrentPage((page) => page + 1);
     }
   };
 
   const goPrevPage = () => {
     if (linkInfo.prev_link) {
-      setIsLoading(true);
-      fetchRooms(linkInfo.prev_link);
+      setCurrentPage((page) => page - 1);
     }
   };
-
-  useEffect(() => {
-    fetchRooms(baseURL);
-  }, []);
 
   return (
     <>
@@ -99,6 +98,7 @@ export default function Home() {
             <RoomSkeleton />
           </>
         ) : null}
+
         {rooms.map((room) => (
           <Room
             imageUrl={room.photos[0].file}
