@@ -26,3 +26,5 @@ export interface ILinkInfo {
   prev_link: null | string;
   count: number;
 }
+
+export interface IRoomDetail extends IRoomList {}

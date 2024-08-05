@@ -5,35 +5,7 @@ import Room from './Room';
 import RoomSkeleton from './RoomSkeleton';
 import Paginator from './Paginator';
 import { getRoomList } from './api';
-
-interface IPhoto {
-  pk: string;
-  file: string;
-  description: string;
-}
-
-interface IRoom {
-  pk: number;
-  name: string;
-  country: string;
-  city: string;
-  description: string;
-  room_type: string;
-  bedrooms: number;
-  price: number;
-  rating: number;
-  number_of_reviews: number;
-  is_owner: boolean;
-  photos: IPhoto[];
-}
-
-interface ILinkInfo {
-  current_page: number;
-  total_pages: number;
-  next_link: null | string;
-  prev_link: null | string;
-  count: number;
-}
+import { ILinkInfo, IRoomList } from '../types';
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +23,7 @@ export default function Home() {
     prev_link: null,
     count: 1,
   };
-  const rooms: IRoom[] = data?.content ?? [];
+  const rooms: IRoomList[] = data?.content ?? [];
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
@@ -101,6 +73,7 @@ export default function Home() {
 
         {rooms.map((room) => (
           <Room
+            pk={room.pk}
             imageUrl={room.photos[0].file}
             type={room.room_type}
             city={room.city}
