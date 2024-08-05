@@ -27,4 +27,40 @@ export interface ILinkInfo {
   count: number;
 }
 
-export interface IRoomDetail extends IRoomList {}
+export interface IRoomHost {
+  pk: number;
+  username: string;
+  profile_picture: string;
+}
+
+export interface IRoomAmenity {
+  pk: number;
+  name: string;
+  description: string | null;
+  icon: string | null;
+}
+
+export interface IRoomDetail extends IRoomList {
+  host: IRoomHost;
+  amenities: IRoomAmenity;
+  host: IRoomHost;
+  amenities: IRoomAmenity[];
+  category: {
+    pk: number;
+    name: string;
+    kind: string;
+  };
+  is_liked: false;
+  bathrooms: string;
+  beds: string;
+  address: string;
+  pet_allowed: boolean;
+  max_capacity: number;
+}
+
+export interface IReview {
+  user: IRoomHost;
+  rating: number;
+  comments: string;
+  created_date: string;
+}
