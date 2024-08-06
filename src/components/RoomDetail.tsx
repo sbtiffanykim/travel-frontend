@@ -144,14 +144,16 @@ export default function RoomDetail() {
       <HStack gap={1}>
         <Avatar src={roomData?.host.profile_picture} size='md' />
         <Grid templateRows={'1fr 1fr'}>
-          <Heading fontWeight='semibold' fontSize='xl'>
+          <Heading fontWeight='semibold' fontSize={'17'}>
             Hosted by {capitalize(roomData?.host.username)}
           </Heading>
-          <Text color='gray.600'>Hosted for 0 year</Text>
+          <Text color='gray.600' fontSize={'14'}>
+            Hosted for 0 year
+          </Text>
         </Grid>
       </HStack>
 
-      <Divider colorScheme='blackAlpha' mt={10} />
+      <Divider borderColor='gray.200' border={'2'} mt={10} />
 
       {/* Description */}
       <Box my={10}>
@@ -176,7 +178,7 @@ export default function RoomDetail() {
         </Modal>
       </Box>
 
-      <Divider colorScheme='blackAlpha' mt={10} />
+      <Divider borderColor='gray.200' border={'2'} mt={10} />
 
       {/* Amenities */}
       <Box my={10}>
@@ -197,7 +199,7 @@ export default function RoomDetail() {
         </Container>
       </Box>
 
-      <Divider colorScheme='blackAlpha' mt={10} />
+      <Divider borderColor='gray.200' border={'2'} mt={10} />
 
       {/* reviews */}
       <Box my={10}>
