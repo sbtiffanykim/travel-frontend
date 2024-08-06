@@ -33,6 +33,10 @@ export interface IRoomHost {
   profile_picture: string;
 }
 
+export interface IRoomReviewUser extends IRoomHost {
+  date_joined: string;
+}
+
 export interface IRoomAmenity {
   pk: number;
   name: string;
@@ -59,7 +63,7 @@ export interface IRoomDetail extends IRoomList {
 }
 
 export interface IReview {
-  user: IRoomHost;
+  user: IRoomReviewUser;
   rating: number;
   comments: string;
   created_date: string;

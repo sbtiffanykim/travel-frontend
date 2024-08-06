@@ -205,17 +205,22 @@ export default function RoomDetail() {
             Show all {reviews.length} review{reviews.length < 1 ? '' : 's'}
           </Button>
 
-          <Modal isOpen={isReviewOpen} onClose={onReviewClose}>
+          <Modal
+            isOpen={isReviewOpen}
+            onClose={onReviewClose}
+            scrollBehavior='inside'
+            size={'xl'}
+          >
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent py={10} px={7}>
               <ModalHeader>
                 <ModalCloseButton />
-                <Heading size={'md'}>
+                <Heading size={'md'} fontWeight={'semibold'}>
                   {reviews.length} Review{reviews.length < 1 ? '' : 's'}
                 </Heading>
               </ModalHeader>
-              <ModalBody padding={10}>
-                {!isReviewsLoading && <ReviewCard reviews={reviews} />}
+              <ModalBody>
+                {!isReviewsLoading && <ReviewCard reviews={reviews} inModal={true} />}
               </ModalBody>
             </ModalContent>
           </Modal>
