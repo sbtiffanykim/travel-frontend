@@ -11,6 +11,7 @@ import {
   GridItem,
   Heading,
   HStack,
+  Icon,
   Image,
   Modal,
   ModalBody,
@@ -21,6 +22,7 @@ import {
   Skeleton,
   Text,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
 import { ILinkInfo, IReview, IRoomAmenity } from '../types';
@@ -171,9 +173,18 @@ export default function RoomDetail() {
         <Heading size={'md'} fontWeight={'semibold'}>
           What this place offers
         </Heading>
-        <Grid templateColumns={'1fr 1fr'} gap={5}>
-          {roomData?.amenities.map((amenity: IRoomAmenity) => amenity.name)}
-        </Grid>
+        <Container marginX={'none'} padding={0} my={6}>
+          <Grid templateColumns={'1fr 1fr'}>
+            {roomData?.amenities.map((amenity: IRoomAmenity) => {
+              return (
+                <HStack key={amenity.pk}>
+                  <Icon></Icon>
+                  <Text>{amenity.name}</Text>
+                </HStack>
+              );
+            })}
+          </Grid>
+        </Container>
       </Box>
 
       <Divider colorScheme='blackAlpha' mt={10} />
