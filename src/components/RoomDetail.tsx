@@ -22,11 +22,11 @@ import {
   Skeleton,
   Text,
   useDisclosure,
-  VStack,
 } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
 import { ILinkInfo, IReview, IRoomAmenity } from '../types';
 import ReviewCard from './ReviewCard';
+import { useEffect, useRef, useState } from 'react';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
@@ -48,6 +48,15 @@ export default function RoomDetail() {
     onOpen: onReviewOpen,
     onClose: onReviewClose,
   } = useDisclosure();
+  const [isTruncated, setIsTruncated] = useState(false);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (descriptionRef.current) {
+      setIsTruncated(
+        descriptionRef.current.scrollHeight > descriptionRef.current.clientHeight
+      );
+    }
+  }, []);
 
   const capitalize = (word?: string) => {
     if (!word) return '';
@@ -152,6 +161,7 @@ export default function RoomDetail() {
           variant={'unstyled'}
           textDecoration={'underline'}
           mt={3}
+          hidden={!isTruncated}
         >
           Show more
         </Button>
@@ -174,7 +184,7 @@ export default function RoomDetail() {
           What this place offers
         </Heading>
         <Container marginX={'none'} padding={0} my={6}>
-          <Grid templateColumns={'1fr 1fr'}>
+          <Grid templateColumns={'1fr 1fr'} rowGap={3}>
             {roomData?.amenities.map((amenity: IRoomAmenity) => {
               return (
                 <HStack key={amenity.pk}>
