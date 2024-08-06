@@ -82,23 +82,23 @@ export default function RoomDetail() {
         rounded='md'
         overflow='hidden'
       >
-        {[0, 1, 2, 3, 4].map((index: number) => (
-          <GridItem
-            key={index}
-            overflow='hidden'
-            colSpan={index === 0 ? 2 : 1}
-            rowSpan={index === 0 ? 2 : 1}
-          >
-            <Skeleton isLoaded={!isRoomDataLoading} h='100%' w='100%'>
-              <Image
-                src={roomData?.photos[index].file}
-                w='100%'
-                h='100%'
-                objectFit='cover'
-              />
-            </Skeleton>
-          </GridItem>
-        ))}
+        {[0, 1, 2, 3, 4].map((index: number) => {
+          const imageSrc =
+            roomData?.photos[index]?.file ||
+            roomData?.photos[index % roomData.photos.length]?.file;
+          return (
+            <GridItem
+              key={index}
+              overflow='hidden'
+              colSpan={index === 0 ? 2 : 1}
+              rowSpan={index === 0 ? 2 : 1}
+            >
+              <Skeleton isLoaded={!isRoomDataLoading} h='100%' w='100%'>
+                <Image src={imageSrc} w='100%' h='100%' objectFit='cover' />
+              </Skeleton>
+            </GridItem>
+          );
+        })}
       </Grid>
 
       {/* Brief Room Information */}
