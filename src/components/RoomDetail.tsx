@@ -50,17 +50,23 @@ export default function RoomDetail() {
   } = useDisclosure();
   const [isTruncated, setIsTruncated] = useState(false);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
+
   useEffect(() => {
     if (descriptionRef.current) {
       setIsTruncated(
         descriptionRef.current.scrollHeight > descriptionRef.current.clientHeight
       );
     }
-  }, []);
+  }, [roomData?.description]);
 
   const capitalize = (word?: string) => {
     if (!word) return '';
     return word[0].toUpperCase() + word.slice(1);
+  };
+
+  const formatDescription = (description?: string) => {
+    if (!description) return '';
+    return description.replace(/\n/g, '<br />');
   };
 
   const reviewLinkInfo: ILinkInfo = reviewData?.page ?? {
@@ -157,23 +163,41 @@ export default function RoomDetail() {
 
       {/* Description */}
       <Box my={10}>
-        <Text noOfLines={5}>{roomData?.description}</Text>
-        <Button
-          onClick={onDescriptionOpen}
-          variant={'unstyled'}
-          textDecoration={'underline'}
-          mt={3}
-          hidden={!isTruncated}
-        >
-          Show more
-        </Button>
+        <Text
+          noOfLines={5}
+          ref={descriptionRef}
+          dangerouslySetInnerHTML={{
+            __html: formatDescription(roomData?.description),
+          }}
+        />
+        {isTruncated && (
+          <Button
+            onClick={onDescriptionOpen}
+            variant={'unstyled'}
+            textDecoration={'underline'}
+            mt={3}
+          >
+            Show more
+          </Button>
+        )}
 
-        <Modal isOpen={isDescriptionOpen} onClose={onDescriptionClose}>
+        <Modal
+          isOpen={isDescriptionOpen}
+          onClose={onDescriptionClose}
+          scrollBehavior='inside'
+          size={'xl'}
+        >
           <ModalOverlay />
-          <ModalContent py={10} px={3}>
+          <ModalContent py={10} px={5}>
             <ModalHeader color={'gray.800'}>{roomData?.name}</ModalHeader>
             <ModalCloseButton />
-            <ModalBody color={'gray.600'}>{roomData?.description}</ModalBody>
+            <ModalBody color={'gray.600'}>
+              <Text
+                dangerouslySetInnerHTML={{
+                  __html: formatDescription(roomData?.description),
+                }}
+              />
+            </ModalBody>
           </ModalContent>
         </Modal>
       </Box>
