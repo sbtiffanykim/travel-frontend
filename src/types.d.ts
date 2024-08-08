@@ -1,7 +1,7 @@
-export interface IPhoto {
+export interface IMedia {
   pk: string;
   file: string;
-  description: string;
+  description?: string;
 }
 
 export interface IRoomList {
@@ -16,8 +16,21 @@ export interface IRoomList {
   rating: number;
   number_of_reviews: number;
   is_owner: boolean;
-  photos: IPhoto[];
+  photos: IMedia[];
 }
+
+export interface IExpList {
+  pk: number;
+  name: string;
+  city: string;
+  price: number;
+  total_reviews: number;
+  rating_average: number;
+  thumbnail: IMedia | null;
+  video: IMedia | null;
+}
+
+export type IListItem = IRoomList | IExpList;
 
 export interface ILinkInfo {
   current_page: number;
