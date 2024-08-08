@@ -19,3 +19,6 @@ export const getRoomReviews = async ({ queryKey }: QueryFunctionContext) => {
   const response = await instance.get(`rooms/${roomPk}/reviews`);
   return response.data;
 };
+
+export const getExperienceList = (page: number) =>
+  instance.get(`experiences?page=${page}`).then((response) => response.data);

@@ -5,6 +5,7 @@ import RoomDetail from './components/RoomDetail';
 import Home from './components/Home';
 import RoomList from './components/RoomList';
 import ExperienceList from './components/ExperienceList';
+import ExperienceDetail from './components/ExperienceDetail';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: 'rooms/:roomPk',
         element: <RoomDetail />,
+      },
+      {
+        path: 'experiences/:experiencePk',
+        element: <ExperienceDetail />,
       },
     ],
   },

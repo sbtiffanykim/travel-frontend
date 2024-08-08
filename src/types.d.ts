@@ -22,12 +22,13 @@ export interface IRoomList {
 export interface IExpList {
   pk: number;
   name: string;
+  country: string;
   city: string;
   price: number;
   total_reviews: number;
   rating_average: number;
-  thumbnail: IMedia | null;
-  video: IMedia | null;
+  thumbnail: IMedia;
+  video: IMedia;
 }
 
 export type IListItem = IRoomList | IExpList;
