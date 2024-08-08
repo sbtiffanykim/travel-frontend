@@ -1,10 +1,13 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
   HStack,
   IconButton,
   LightMode,
+  Tab,
+  TabList,
+  Tabs,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -21,21 +24,65 @@ export default function Header() {
     onOpen: onLoginOpen,
     onClose: onLoginClose,
   } = useDisclosure();
+
   const {
     isOpen: isSignupOpen,
     onOpen: onSignupOpen,
     onClose: onSignupClose,
   } = useDisclosure();
+
+  const location = useLocation();
+
+  const tabIndex =
+    location.pathname === '/' || location.pathname.startsWith('/rooms')
+      ? 0
+      : location.pathname.startsWith('/experiences')
+      ? 1
+      : 0;
+
   const { colorMode, toggleColorMode } = useColorMode();
+
   const Icon = useColorModeValue(MdLightMode, MdDarkMode);
 
   return (
     <HStack justifyContent={'space-between'} py={5} px={10} borderBottomWidth={1}>
-      <Link to={'/'}>
-        <Box color='red.500'>
-          <FaAirbnb size='38px' />
-        </Box>
-      </Link>
+      <Box>
+        <Link to={'/'}>
+          <Box color='red.500'>
+            <FaAirbnb size='38px' />
+          </Box>
+        </Link>
+      </Box>
+
+      <Box>
+        <Tabs variant={'unstyled'}>
+          <TabList textColor={'gray.500'} fontWeight={'semibold'}>
+            <Tab
+              as={Link}
+              to={'/rooms'}
+              rounded={'2xl'}
+              _hover={
+                tabIndex ? { bgColor: 'gray.100', textColor: 'gray.600' } : undefined
+              }
+              _selected={{ textColor: 'gray.800' }}
+            >
+              Stays
+            </Tab>
+            <Tab
+              as={Link}
+              to={'/experiences'}
+              rounded={'2xl'}
+              _hover={
+                !tabIndex ? { bgColor: 'gray.100', textColor: 'gray.600' } : undefined
+              }
+              _selected={{ textColor: 'gray.800' }}
+            >
+              Experiences
+            </Tab>
+          </TabList>
+        </Tabs>
+      </Box>
+
       <HStack spacing={2}>
         <IconButton
           aria-label={
