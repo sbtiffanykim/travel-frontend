@@ -17,11 +17,11 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
-import { getExperienceDetail } from './api';
+import { getExperienceDetail } from '../../api';
 import { FaStar } from 'react-icons/fa';
-import { capitalize, formatDescription } from '../utils';
+import { capitalize, formatDescription } from '../../utils';
 import { useEffect, useRef, useState } from 'react';
-import { IInclusion, IMedia } from '../types';
+import { IInclusion, IMedia } from '../../types';
 
 export default function ExperienceDetail({}) {
   const { experiencePk } = useParams();

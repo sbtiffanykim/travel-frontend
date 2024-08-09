@@ -1,8 +1,8 @@
-import { IExpList } from '../types';
-import { getExperienceList } from './api';
+import { IExpList } from '../../types';
+import { getExperienceList } from '../../api';
 import Experience from './Experience';
-import ExperienceSkeleton from './ExperienceSkeleton';
-import List from './List';
+import ExperienceSkeleton from '../ExperienceSkeleton';
+import List from '../List';
 
 export default function ExperienceList() {
   return (
