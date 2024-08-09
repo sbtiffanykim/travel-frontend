@@ -27,6 +27,7 @@ import { FaStar } from 'react-icons/fa';
 import { ILinkInfo, IReview, IRoomAmenity } from '../types';
 import ReviewCard from './ReviewCard';
 import { useEffect, useRef, useState } from 'react';
+import { capitalize, formatDescription } from '../utils';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
@@ -58,16 +59,6 @@ export default function RoomDetail() {
       );
     }
   }, [roomData?.description]);
-
-  const capitalize = (word?: string) => {
-    if (!word) return '';
-    return word[0].toUpperCase() + word.slice(1);
-  };
-
-  const formatDescription = (description?: string) => {
-    if (!description) return '';
-    return description.replace(/\n/g, '<br />');
-  };
 
   const reviewLinkInfo: ILinkInfo = reviewData?.page ?? {
     current_page: 1,
