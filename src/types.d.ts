@@ -19,20 +19,6 @@ export interface IRoomList {
   photos: IMedia[];
 }
 
-export interface IExpList {
-  pk: number;
-  name: string;
-  country: string;
-  city: string;
-  price: number;
-  total_reviews: number;
-  rating_average: number;
-  thumbnail: IMedia;
-  video: IMedia;
-}
-
-export type IListItem = IRoomList | IExpList;
-
 export interface ILinkInfo {
   current_page: number;
   total_pages: number;
@@ -82,3 +68,23 @@ export interface IReview {
   comments: string;
   created_date: string;
 }
+
+export interface IInclusion {
+  pk: number;
+  name: string;
+  details: string;
+}
+
+export interface IExpList {
+  pk: number;
+  name: string;
+  country: string;
+  city: string;
+  price: number;
+  total_reviews: number;
+  rating_average: number;
+  thumbnail: IMedia;
+  video: IMedia;
+}
+
+export type IListItem = IRoomList | IExpList;

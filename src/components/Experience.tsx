@@ -13,7 +13,7 @@ interface IExpProps {
   totalReviews: number;
   ratingAverage: number;
   thumbnail: string;
-  video: string;
+  videoUrl: string;
 }
 
 export default function Experience({
@@ -25,7 +25,7 @@ export default function Experience({
   totalReviews,
   ratingAverage,
   thumbnail,
-  video,
+  videoUrl,
 }: IExpProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -50,7 +50,7 @@ export default function Experience({
           {isHovered && (
             <Box position='absolute' top={0} left={0} w='100%' h='100%'>
               <ReactPlayer
-                url={video}
+                url={videoUrl}
                 width='100%'
                 height='100%'
                 playing={!isPaused}

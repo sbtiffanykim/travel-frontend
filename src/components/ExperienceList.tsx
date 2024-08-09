@@ -20,7 +20,7 @@ export default function ExperienceList() {
           totalReviews={experience.total_reviews}
           ratingAverage={experience.rating_average}
           thumbnail={experience.thumbnail.file}
-          video={experience.video.file}
+          videoUrl={experience.video.file}
         />
       )}
     ></List>
