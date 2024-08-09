@@ -1,7 +1,7 @@
 import { IExpList } from '../../types';
 import { getExperienceList } from '../../api';
 import Experience from './Experience';
-import ExperienceSkeleton from '../ExperienceSkeleton';
+import ExperienceSkeleton from './ExperienceSkeleton';
 import List from '../List';
 
 export default function ExperienceList() {

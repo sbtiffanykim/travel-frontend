@@ -1,7 +1,7 @@
 import { Box, Grid } from '@chakra-ui/react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { ILinkInfo, IListItem } from '../types';
-import Paginator from './Paginator';
+import Paginator from './Shared/Paginator';
 import { useState } from 'react';
 
 interface ListProps<T extends IListItem> {
