@@ -76,7 +76,7 @@ export default function Room({
         </Text>
         <HStack spacing={1} pt={1.5}>
           <Text fontSize='sm' color={gray}>
-            <Text fontWeight='semibold' as='text' mr={1}>
+            <Text fontWeight='semibold' as={'span'} mr={1}>
               ${price}
             </Text>
             night
