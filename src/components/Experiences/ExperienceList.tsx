@@ -16,6 +16,7 @@ export default function ExperienceList() {
           name={experience.name}
           country={experience.country}
           city={experience.city}
+          duration={experience.duration}
           price={experience.price}
           totalReviews={experience.total_reviews}
           ratingAverage={experience.rating_average}

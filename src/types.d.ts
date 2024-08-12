@@ -80,6 +80,7 @@ export interface IExpList {
   name: string;
   country: string;
   city: string;
+  duration: string;
   price: number;
   total_reviews: number;
   rating_average: number;

@@ -20,7 +20,7 @@ import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { getExperienceDetail, getExperienceReview } from '../../api';
 import { FaStar } from 'react-icons/fa';
-import { capitalize, formatDescription } from '../../utils';
+import { capitalize, formatDescription, formatDuration } from '../../utils';
 import { useEffect, useRef, useState } from 'react';
 import { IInclusion, ILinkInfo, IMedia, IReview } from '../../types';
 import Reviews from '../Shared/Reviews';
@@ -62,6 +62,8 @@ export default function ExperienceDetail({}) {
   };
 
   const reviews: IReview[] = reviewData?.content ?? [];
+
+  const duration = formatDuration(expData?.duration);
 
   return (
     <Box mt={10} mb={20} mx={10}>
@@ -114,7 +116,11 @@ export default function ExperienceDetail({}) {
           <Heading fontSize={'2xl'} fontWeight={'semibold'}>
             Experience hosted by {capitalize(expData?.host.username)}
           </Heading>
-          <Text>{expData?.duration}</Text>
+
+          <Text>
+            {duration} hour
+            {parseInt(duration) > 1 ? 's' : ''}
+          </Text>
         </VStack>
         <Avatar src={expData?.host.profile_picture} />
       </HStack>

@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { FaPause, FaPlay, FaRegHeart, FaStar } from 'react-icons/fa';
 import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
+import { formatDuration } from '../../utils';
 
 interface IExpProps {
   pk: number;
   name: string;
   country: string;
   city: string;
+  duration: string;
   price: number;
   totalReviews: number;
   ratingAverage: number;
@@ -21,6 +23,7 @@ export default function Experience({
   name,
   country,
   city,
+  duration,
   price,
   totalReviews,
   ratingAverage,
@@ -30,6 +33,7 @@ export default function Experience({
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
+  const formattedDuration = formatDuration(duration);
   return (
     <Link to={`/experiences/${pk}`}>
       <VStack key={pk} alignItems={'flex-start'} spacing={1}>
@@ -89,12 +93,20 @@ export default function Experience({
             }}
           />
         </Box>
-        <HStack spacing={1} fontSize={16} textColor={'gray.600'}>
+        <HStack
+          spacing={1}
+          fontSize={16}
+          textColor={'gray.600'}
+          fontWeight={'semibold'}
+          pt={1}
+        >
           <FaStar />
           <Text>{ratingAverage?.toFixed(2)}</Text>
           <Text>({totalReviews})</Text>
           <Text>·</Text>
-          <Text>{country}</Text>
+          <Text>
+            {formattedDuration} hour{formattedDuration > 1 ? 's' : ''}
+          </Text>
         </HStack>
         <Heading size={'sm'} fontWeight={'semibold'}>
           {name}
