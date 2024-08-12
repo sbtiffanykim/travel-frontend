@@ -23,9 +23,7 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { FaStar } from 'react-icons/fa';
 import { ILinkInfo, IReview, IRoomAmenity } from '../../types';
-import ReviewCard from '../Shared/ReviewCard';
 import { useEffect, useRef, useState } from 'react';
 import { capitalize, formatDescription } from '../../utils';
 import Reviews from '../Shared/Reviews';

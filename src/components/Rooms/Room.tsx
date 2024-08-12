@@ -64,7 +64,7 @@ export default function Room({
           </Text>
           <HStack spacing={1} color={gray}>
             <FaStar size={15} />
-            <Text>{rating}</Text>
+            <Text>{rating?.toFixed(2)}</Text>
             <Text>({totalReviews})</Text>
           </HStack>
         </Grid>

@@ -91,7 +91,7 @@ export default function Experience({
         </Box>
         <HStack spacing={1} fontSize={16} textColor={'gray.600'}>
           <FaStar />
-          <Text>{ratingAverage}</Text>
+          <Text>{ratingAverage?.toFixed(2)}</Text>
           <Text>({totalReviews})</Text>
           <Text>·</Text>
           <Text>{country}</Text>
