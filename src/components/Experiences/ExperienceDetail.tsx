@@ -12,16 +12,18 @@ import {
   HStack,
   Image,
   Text,
+  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
-import { getExperienceDetail } from '../../api';
+import { getExperienceDetail, getExperienceReview } from '../../api';
 import { FaStar } from 'react-icons/fa';
 import { capitalize, formatDescription } from '../../utils';
 import { useEffect, useRef, useState } from 'react';
-import { IInclusion, IMedia } from '../../types';
+import { IInclusion, ILinkInfo, IMedia, IReview } from '../../types';
+import Reviews from '../Shared/Reviews';
 
 export default function ExperienceDetail({}) {
   const { experiencePk } = useParams();
@@ -29,6 +31,11 @@ export default function ExperienceDetail({}) {
     queryKey: ['experience', experiencePk],
     queryFn: getExperienceDetail,
   });
+  const { data: reviewData, isLoading: isReviewsLoading } = useQuery({
+    queryKey: ['exprience', experiencePk, 'reviews'],
+    queryFn: getExperienceReview,
+  });
+  const { isOpen, onClose, onOpen } = useDisclosure();
   const [isTruncated, setIsTruncated] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
@@ -46,6 +53,16 @@ export default function ExperienceDetail({}) {
     }
   }, [expData?.description]);
 
+  const reviewInfo: ILinkInfo = reviewData?.page ?? {
+    current_page: 1,
+    total_pages: 1,
+    next_link: null,
+    prev_link: null,
+    count: 1,
+  };
+
+  const reviews: IReview[] = reviewData?.content ?? [];
+
   return (
     <Box mt={10} mb={20} mx={10}>
       {/* Title */}
@@ -55,7 +72,7 @@ export default function ExperienceDetail({}) {
         </Heading>
         <HStack fontSize={'sm'} fontWeight={'semibold'} spacing={1}>
           <FaStar />
-          <Text pl={1}>{expData?.rating_average}</Text>
+          <Text pl={1}>{expData?.rating_average.toFixed(2)}</Text>
           <Text fontWeight={'normal'}>({expData?.total_reviews})</Text>
           <Text px={1}>·</Text>
           <Text>
@@ -153,6 +170,18 @@ export default function ExperienceDetail({}) {
           ))}
         </Grid>
       </Box>
+
+      <Divider borderColor='gray.200' border={'2'} my={15} />
+
+      {/* reviews */}
+      <Reviews
+        totalRating={expData?.rating_average}
+        reviews={reviews}
+        isReviewsLoading={isReviewsLoading}
+        onReviewOpen={onOpen}
+        isReviewOpen={isOpen}
+        onReviewClose={onClose}
+      />
     </Box>
   );
 }

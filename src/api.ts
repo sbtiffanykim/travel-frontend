@@ -28,3 +28,9 @@ export const getExperienceDetail = async ({ queryKey }: QueryFunctionContext) =>
   const response = await instance.get(`experiences/${experiencePk}`);
   return response.data;
 };
+
+export const getExperienceReview = async ({ queryKey }: QueryFunctionContext) => {
+  const [_, experiencePk] = queryKey;
+  const response = await instance.get(`experiences/${experiencePk}/reviews`);
+  return response.data;
+};

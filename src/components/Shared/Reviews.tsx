@@ -39,7 +39,7 @@ export default function Reviews({
       <Heading fontSize={'xl'} fontWeight={'semibold'}>
         <HStack>
           <FaStar />
-          <Text>{totalRating}</Text>
+          <Text>{totalRating.toFixed(2)}</Text>
           <Text>·</Text>
           <Text>
             {reviews.length} review{reviews.length < 1 ? '' : 's'}
