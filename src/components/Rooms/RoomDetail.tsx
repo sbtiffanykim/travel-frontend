@@ -28,6 +28,7 @@ import { ILinkInfo, IReview, IRoomAmenity } from '../../types';
 import ReviewCard from '../Shared/ReviewCard';
 import { useEffect, useRef, useState } from 'react';
 import { capitalize, formatDescription } from '../../utils';
+import Reviews from '../Shared/Reviews';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
@@ -217,53 +218,14 @@ export default function RoomDetail() {
       <Divider borderColor='gray.200' border={'2'} mt={10} />
 
       {/* reviews */}
-      <Box my={10}>
-        <Heading fontSize={'xl'} fontWeight={'semibold'}>
-          <HStack>
-            <FaStar />
-            <Text>{roomData?.rating}</Text>
-            <Text>·</Text>
-            <Text>
-              {reviews.length} review{reviews.length < 1 ? '' : 's'}
-            </Text>
-          </HStack>
-        </Heading>
-        <Container maxW='container.lg' marginX={'none'} padding={0}>
-          <Grid templateColumns={'1fr 1fr'} gap={10}>
-            {!isReviewsLoading && <ReviewCard reviews={reviews} />}
-          </Grid>
-          <Button
-            variant={'outline'}
-            my={8}
-            borderColor={'gray.800'}
-            px={8}
-            py={5}
-            onClick={onReviewOpen}
-          >
-            Show all {reviews.length} review{reviews.length < 1 ? '' : 's'}
-          </Button>
-
-          <Modal
-            isOpen={isReviewOpen}
-            onClose={onReviewClose}
-            scrollBehavior='inside'
-            size={'xl'}
-          >
-            <ModalOverlay />
-            <ModalContent py={10} px={7}>
-              <ModalHeader>
-                <ModalCloseButton />
-                <Heading size={'md'} fontWeight={'semibold'}>
-                  {reviews.length} Review{reviews.length < 1 ? '' : 's'}
-                </Heading>
-              </ModalHeader>
-              <ModalBody>
-                {!isReviewsLoading && <ReviewCard reviews={reviews} inModal={true} />}
-              </ModalBody>
-            </ModalContent>
-          </Modal>
-        </Container>
-      </Box>
+      <Reviews
+        totalRating={roomData?.rating}
+        reviews={reviews}
+        isReviewsLoading={isReviewsLoading}
+        onReviewOpen={onReviewOpen}
+        isReviewOpen={isReviewOpen}
+        onReviewClose={onReviewClose}
+      />
     </Box>
   );
 }
