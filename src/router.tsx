@@ -6,6 +6,7 @@ import Home from './components/Home';
 import RoomList from './components/Rooms/RoomList';
 import ExperienceList from './components/Experiences/ExperienceList';
 import ExperienceDetail from './components/Experiences/ExperienceDetail';
+import GithubConfirm from './routes/GithubConfirm';
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,15 @@ const router = createBrowserRouter([
       {
         path: 'experiences/:experiencePk',
         element: <ExperienceDetail />,
+      },
+      {
+        path: 'social',
+        children: [
+          {
+            path: 'github',
+            element: <GithubConfirm />,
+          },
+        ],
       },
     ],
   },

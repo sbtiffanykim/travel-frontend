@@ -39,6 +39,8 @@ export default function SocialLogin() {
           Continue with Naver
         </Button>
         <Button
+          as='a'
+          href='https://github.com/login/oauth/authorize?client_id=Ov23liePOECZVmGgKmIN&scope=read:user,user:email'
           w='100%'
           textColor='gray.900'
           fontSize='sm'

@@ -12,7 +12,7 @@ export const getRoomList = (page: number) =>
 
 export const getRoomDetail = async ({ queryKey }: QueryFunctionContext) => {
   const [_, roomPk] = queryKey;
-  const response = await instance.get(`rooms/${roomPk}/`);
+  const response = await instance.get(`rooms/${roomPk}`);
   return response.data;
 };
 
@@ -50,3 +50,16 @@ export const logOut = () => {
     })
     .then((response) => response.data);
 };
+
+export const githubLogIn = (code: string) =>
+  instance
+    .post(
+      `users/github`,
+      { code },
+      {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken') || '',
+        },
+      }
+    )
+    .then((response) => response.status);
