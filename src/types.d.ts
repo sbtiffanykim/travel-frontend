@@ -89,3 +89,15 @@ export interface IExpList {
 }
 
 export type IListItem = IRoomList | IExpList;
+
+export interface ICurrentUser {
+  username: string;
+  email: string;
+  profile_picture: string;
+  date_joined: string;
+  last_login: string;
+  is_host: boolean;
+  gender: string;
+  language: string;
+  currency: string;
+}
