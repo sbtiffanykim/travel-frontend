@@ -1,8 +1,10 @@
+import Cookies from 'js-cookie';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/v1/',
+  withCredentials: true,
 });
 
 export const getRoomList = (page: number) =>
@@ -10,7 +12,7 @@ export const getRoomList = (page: number) =>
 
 export const getRoomDetail = async ({ queryKey }: QueryFunctionContext) => {
   const [_, roomPk] = queryKey;
-  const response = await instance.get(`rooms/${roomPk}`);
+  const response = await instance.get(`rooms/${roomPk}/`);
   return response.data;
 };
 
@@ -33,4 +35,18 @@ export const getExperienceReview = async ({ queryKey }: QueryFunctionContext) =>
   const [_, experiencePk] = queryKey;
   const response = await instance.get(`experiences/${experiencePk}/reviews`);
   return response.data;
+};
+
+export const getCurrentUser = () => {
+  return instance.get(`users/me`).then((response) => response.data);
+};
+
+export const logOut = () => {
+  instance
+    .post(`users/logout`, null, {
+      headers: {
+        'X-CSRFToken': Cookies.get('csrftoken') || '',
+      },
+    })
+    .then((response) => response.data);
 };

@@ -4,7 +4,6 @@ import RoomList from './Rooms/RoomList';
 
 export default function Home() {
   const location = useLocation();
-  console.log(location);
   return (
     <>
       {(location.pathname === '/' || location.pathname.startsWith('/rooms')) && (
