@@ -4,6 +4,14 @@ import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
 export default function SocialLogin() {
+  const kakaoParams = {
+    client_id: '9a0bbc413ab23e67a6eee75ed311ee44',
+    redirect_uri: 'http://127.0.0.1:5173/social/kakao',
+    response_type: 'code',
+  };
+
+  const params = new URLSearchParams(kakaoParams).toString();
+
   return (
     <Box mb={4}>
       <HStack my={6}>
@@ -54,6 +62,8 @@ export default function SocialLogin() {
         </Button>
 
         <Button
+          as='a'
+          href={`https://kauth.kakao.com/oauth/authorize?${params}`}
           w='100%'
           textColor='gray.900'
           fontSize='sm'

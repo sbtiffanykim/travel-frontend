@@ -7,6 +7,7 @@ import RoomList from './components/Rooms/RoomList';
 import ExperienceList from './components/Experiences/ExperienceList';
 import ExperienceDetail from './components/Experiences/ExperienceDetail';
 import GithubConfirm from './routes/GithubConfirm';
+import KakaoConfirm from './routes/KakaoConfirm';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
           {
             path: 'github',
             element: <GithubConfirm />,
+          },
+          {
+            path: 'kakao',
+            element: <KakaoConfirm />,
           },
         ],
       },
