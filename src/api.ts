@@ -51,6 +51,33 @@ export const logOut = () => {
     .then((response) => response.data);
 };
 
+export interface IUsernameLoginVariables {
+  username: string;
+  password: string;
+}
+
+export interface IUsernameLoginSuccess {
+  success: string;
+}
+
+export interface IUsernameLoginError {
+  error: string;
+}
+
+export const usernameLogIn = ({ username, password }: IUsernameLoginVariables) => {
+  return instance
+    .post(
+      `users/login`,
+      { username, password },
+      {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken') || '',
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const githubLogIn = (code: string) =>
   instance
     .post(

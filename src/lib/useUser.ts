@@ -8,9 +8,12 @@ export default function useUser() {
     queryFn: getCurrentUser,
     retry: false,
   });
+
+  const isLoggedIn = !isError && !!data; // When there is no error and data exists
+
   return {
     userLoading: isLoading,
     user: data,
-    isLoggedIn: !isError,
+    isLoggedIn,
   };
 }
