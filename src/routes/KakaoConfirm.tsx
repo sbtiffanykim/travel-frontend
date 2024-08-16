@@ -1,28 +1,42 @@
-import { Box, Heading, Spinner, Text, useToast, VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
+import { Box, Heading, Spinner, Text, ToastId, useToast, VStack } from '@chakra-ui/react';
+import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { kakaoLogin } from '../api';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function KakaoConfirm() {
   const { search } = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
+  const toastId = useRef<ToastId>();
   const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: kakaoLogin,
+    onMutate: () => {
+      toastId.current = toast({
+        title: 'Processing',
+        status: 'loading',
+      });
+    },
+    onSuccess: () => {
+      if (toastId.current) {
+        toast.update(toastId.current, {
+          title: 'Welcome',
+          description: 'You are successfully logged in!',
+          status: 'success',
+        });
+      }
+      queryClient.refetchQueries({ queryKey: ['currentUser'] });
+      navigate('/');
+    },
+    onError: () => {},
+  });
+
   const confirmLogin = async () => {
     const params = new URLSearchParams(search);
     const code = params.get('code');
     if (code) {
-      const status = await kakaoLogin(code);
-      if (status === 200) {
-        toast({
-          status: 'success',
-          title: 'Welcome',
-          description: 'You are successfully logged in!',
-        });
-        queryClient.refetchQueries({ queryKey: ['currentUser'] });
-        navigate('/');
-      }
+      mutation.mutate(code);
     }
   };
 
