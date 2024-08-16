@@ -13,6 +13,7 @@ import {
   Tab,
   TabList,
   Tabs,
+  ToastId,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -25,7 +26,8 @@ import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import useUser from '../lib/useUser';
 import { logOut } from '../api';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRef } from 'react';
 
 export default function Header() {
   const { userLoading, user, isLoggedIn } = useUser();
@@ -40,37 +42,42 @@ export default function Header() {
     onOpen: onSignupOpen,
     onClose: onSignupClose,
   } = useDisclosure();
-
   const location = useLocation();
-
   const tabIndex =
     location.pathname === '/' || location.pathname.startsWith('/rooms')
       ? 0
       : location.pathname.startsWith('/experiences')
       ? 1
       : 0;
-
   const { colorMode, toggleColorMode } = useColorMode();
-
   const Icon = useColorModeValue(MdLightMode, MdDarkMode);
-
   const queryClient = useQueryClient();
-
   const toast = useToast();
+  const toastId = useRef<ToastId>();
+
+  const mutation = useMutation({
+    mutationFn: logOut,
+    onMutate: () => {
+      toastId.current = toast({
+        title: 'logout',
+        status: 'loading',
+      });
+    },
+    onSuccess: () => {
+      if (toastId.current) {
+        queryClient.refetchQueries({ queryKey: ['currentUser'] });
+        toast.update(toastId.current, {
+          title: 'Bye Bye',
+          description: 'You are successfully logged out!',
+          status: 'success',
+        });
+      }
+    },
+    onError: () => {},
+  });
 
   const onLogOut = async () => {
-    const toastId = toast({
-      title: 'log out',
-      description: 'bye bye',
-      status: 'success',
-    });
-    await logOut();
-    queryClient.refetchQueries({ queryKey: ['currentUser'] });
-    toast.update(toastId, {
-      title: 'complete',
-      description: 'yaya',
-      status: 'success',
-    });
+    mutation.mutate();
   };
 
   return (

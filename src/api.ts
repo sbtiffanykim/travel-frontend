@@ -42,7 +42,7 @@ export const getCurrentUser = () => {
 };
 
 export const logOut = () => {
-  instance
+  return instance
     .post(`users/logout`, null, {
       headers: {
         'X-CSRFToken': Cookies.get('csrftoken') || '',
