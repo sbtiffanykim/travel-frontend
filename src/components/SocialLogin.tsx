@@ -5,7 +5,7 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 
 export default function SocialLogin() {
   const kakaoParams = {
-    client_id: '9a0bbc413ab23e67a6eee75ed311ee44',
+    client_id: import.meta.env.VITE_KAKAO_CLIENT_ID,
     redirect_uri: 'http://127.0.0.1:5173/social/kakao',
     response_type: 'code',
   };
@@ -59,7 +59,9 @@ export default function SocialLogin() {
         </Button>
         <Button
           as='a'
-          href='https://github.com/login/oauth/authorize?client_id=Ov23liePOECZVmGgKmIN&scope=read:user,user:email'
+          href={`https://github.com/login/oauth/authorize?client_id=${
+            import.meta.env.VITE_GITHUB_CLIENT_ID
+          }&scope=read:user,user:email`}
           w='100%'
           textColor='gray.900'
           fontSize='sm'
