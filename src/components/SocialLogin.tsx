@@ -4,13 +4,13 @@ import { SiNaver } from 'react-icons/si';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
 export default function SocialLogin() {
-  const kakaoParams = {
+  const kakaoP = {
     client_id: import.meta.env.VITE_KAKAO_CLIENT_ID,
     redirect_uri: 'http://127.0.0.1:5173/social/kakao',
     response_type: 'code',
   };
 
-  const params = new URLSearchParams(kakaoParams).toString();
+  const kakaoParams = new URLSearchParams(kakaoP).toString();
 
   const naverP = {
     client_id: import.meta.env.VITE_NAVER_CLIENT_ID,
@@ -20,6 +20,13 @@ export default function SocialLogin() {
   };
 
   const naverParams = new URLSearchParams(naverP).toString();
+
+  const githubP = {
+    client_id: import.meta.env.VITE_GITHUB_CLIENT_ID,
+    scope: 'read:user,user:email',
+  };
+
+  const githubParams = new URLSearchParams(githubP).toString();
 
   return (
     <Box mb={4}>
@@ -59,9 +66,7 @@ export default function SocialLogin() {
         </Button>
         <Button
           as='a'
-          href={`https://github.com/login/oauth/authorize?client_id=${
-            import.meta.env.VITE_GITHUB_CLIENT_ID
-          }&scope=read:user,user:email`}
+          href={`https://github.com/login/oauth/authorize?${githubParams}`}
           w='100%'
           textColor='gray.900'
           fontSize='sm'
@@ -76,7 +81,7 @@ export default function SocialLogin() {
 
         <Button
           as='a'
-          href={`https://kauth.kakao.com/oauth/authorize?${params}`}
+          href={`https://kauth.kakao.com/oauth/authorize?${kakaoParams}`}
           w='100%'
           textColor='gray.900'
           fontSize='sm'
