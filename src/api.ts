@@ -103,3 +103,21 @@ export const kakaoLogin = (code: string) =>
       }
     )
     .then((response) => response.status);
+
+interface INaverLoginVariables {
+  code: string;
+  state: string;
+}
+
+export const naverLogin = ({ code, state }: INaverLoginVariables) =>
+  instance
+    .post(
+      `users/naver`,
+      { code, state },
+      {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken') || '',
+        },
+      }
+    )
+    .then((response) => response.status);

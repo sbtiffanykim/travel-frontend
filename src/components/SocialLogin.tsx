@@ -12,6 +12,15 @@ export default function SocialLogin() {
 
   const params = new URLSearchParams(kakaoParams).toString();
 
+  const naverP = {
+    client_id: import.meta.env.VITE_NAVER_CLIENT_ID,
+    redirect_uri: 'http://127.0.0.1:5173/social/naver',
+    state: encodeURIComponent('naverLogin'),
+    response_type: 'code',
+  };
+
+  const naverParams = new URLSearchParams(naverP).toString();
+
   return (
     <Box mb={4}>
       <HStack my={6}>
@@ -35,6 +44,8 @@ export default function SocialLogin() {
           Continue with Google
         </Button>
         <Button
+          as='a'
+          href={`https://nid.naver.com/oauth2.0/authorize?${naverParams}`}
           w='100%'
           textColor='gray.900'
           fontSize='sm'

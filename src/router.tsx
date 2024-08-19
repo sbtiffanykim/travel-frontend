@@ -8,6 +8,7 @@ import ExperienceList from './components/Experiences/ExperienceList';
 import ExperienceDetail from './components/Experiences/ExperienceDetail';
 import GithubConfirm from './routes/GithubConfirm';
 import KakaoConfirm from './routes/KakaoConfirm';
+import NaverConfirm from './routes/NaverConfirm';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           {
             path: 'kakao',
             element: <KakaoConfirm />,
+          },
+          {
+            path: 'naver',
+            element: <NaverConfirm />,
           },
         ],
       },
