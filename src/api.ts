@@ -121,3 +121,24 @@ export const naverLogin = ({ code, state }: INaverLoginVariables) =>
       }
     )
     .then((response) => response.status);
+
+interface ISignUpVariables {
+  email: string;
+  username: string;
+  password: string;
+  pwConfirm: string;
+}
+
+export const signUp = ({ email, username, password, pwConfirm }: ISignUpVariables) => {
+  instance
+    .post(
+      'users/signUp',
+      { email, username, password, pwConfirm },
+      {
+        headers: {
+          'X-CSRFToken': Cookies.get('csrftoken') || '',
+        },
+      }
+    )
+    .then((response) => response.status);
+};
