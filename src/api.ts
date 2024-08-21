@@ -127,18 +127,36 @@ interface ISignUpVariables {
   username: string;
   password: string;
   pwConfirm: string;
+  gender: string;
+  language: string;
+  currency: string;
 }
 
-export const signUp = ({ email, username, password, pwConfirm }: ISignUpVariables) => {
-  instance
-    .post(
+export const signUp = async ({
+  email,
+  username,
+  password,
+  pwConfirm,
+  gender,
+  language,
+  currency,
+}: ISignUpVariables) => {
+  try {
+    const response = await instance.post(
       'users/signUp',
-      { email, username, password, pwConfirm },
+      { email, username, password, pwConfirm, gender, language, currency },
       {
         headers: {
           'X-CSRFToken': Cookies.get('csrftoken') || '',
         },
       }
-    )
-    .then((response) => response.status);
+    );
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // console.log('AxiosError in api:', error.response);
+      throw error;
+    }
+    throw new Error('An unexpected error occured');
+  }
 };
