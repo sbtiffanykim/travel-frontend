@@ -1,12 +1,8 @@
-import React, { useEffect } from 'react';
-import useUser from '../lib/useUser';
+import { useEffect } from 'react';
+import useUser from './useUser';
 import { useNavigate } from 'react-router-dom';
 
-interface IProtedctedPageProps {
-  children: React.ReactNode;
-}
-
-export default function HostOnlyPage({ children }: IProtedctedPageProps) {
+export default function useRequireHost() {
   const { user, userLoading } = useUser();
   const navigate = useNavigate();
 
@@ -17,5 +13,5 @@ export default function HostOnlyPage({ children }: IProtedctedPageProps) {
       }
     }
   }, [userLoading, navigate]);
-  return <>{children}</>;
+  return;
 }
