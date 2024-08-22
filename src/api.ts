@@ -160,3 +160,42 @@ export const signUp = async ({
     throw new Error('An unexpected error occured');
   }
 };
+
+export const getAmenities = () => {
+  return instance.get(`rooms/amenities`).then((response) => response.data);
+};
+
+export const getCategories = (kind: string) => {
+  return instance.get(`categories?kind=${kind}`).then((response) => response.data);
+};
+
+export interface IUploadRoomVariables {
+  name: string;
+  country: string;
+  city: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  beds: number;
+  description: string;
+  address: string;
+  pet_allowed: boolean;
+  room_type: string;
+  amenities: number[];
+  category: number;
+  max_capacity: number;
+}
+
+export const uploadRoom = async (variables: IUploadRoomVariables) => {
+  try {
+    const response = await instance.post(`rooms/`, variables, {
+      headers: {
+        'X-CSRFToken': Cookies.get('csrftoken') || '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Failed to upload room');
+  }
+};

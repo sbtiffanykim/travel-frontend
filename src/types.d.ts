@@ -44,7 +44,14 @@ export interface IRoomAmenity {
   icon: string | null;
 }
 
+export interface ICategory {
+  pk: number;
+  kind: string;
+  name: string;
+}
+
 export interface IRoomDetail extends IRoomList {
+  id: number;
   host: IRoomHost;
   amenities: IRoomAmenity;
   host: IRoomHost;
