@@ -145,6 +145,11 @@ export default function Header() {
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={onLogOut}>Log out</MenuItem>
+                {user?.is_host ? (
+                  <Link to='/rooms/upload'>
+                    <MenuItem>Upload room</MenuItem>
+                  </Link>
+                ) : null}
               </MenuList>
             </Menu>
           )

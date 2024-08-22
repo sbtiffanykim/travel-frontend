@@ -9,6 +9,7 @@ import ExperienceDetail from './components/Experiences/ExperienceDetail';
 import GithubConfirm from './routes/GithubConfirm';
 import KakaoConfirm from './routes/KakaoConfirm';
 import NaverConfirm from './routes/NaverConfirm';
+import UploadRoom from './routes/UploadRoom';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +29,10 @@ const router = createBrowserRouter([
         path: 'experiences',
         element: <ExperienceList />,
       },
-
+      {
+        path: 'rooms/upload',
+        element: <UploadRoom />,
+      },
       {
         path: 'rooms/:roomPk',
         element: <RoomDetail />,
