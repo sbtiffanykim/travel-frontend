@@ -1,3 +1,6 @@
+import { useParams } from 'react-router-dom';
+import ReactPlayer from 'react-player';
+import { FaStar } from 'react-icons/fa';
 import {
   Avatar,
   Box,
@@ -16,14 +19,11 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
-import ReactPlayer from 'react-player';
-import { getExperienceDetail, getExperienceReview } from '../../api';
-import { FaStar } from 'react-icons/fa';
-import { capitalize, formatDescription, formatDuration } from '../../utils';
+import { getExperienceDetail, getExperienceReview } from '../api';
+import { capitalize, formatDescription, formatDuration } from '../utils';
 import { useEffect, useRef, useState } from 'react';
-import { IInclusion, ILinkInfo, IMedia, IReview } from '../../types';
-import Reviews from '../Shared/Reviews';
+import { IInclusion, ILinkInfo, IMedia, IReview } from '../types';
+import Reviews from '../components/Shared/Reviews';
 
 export default function ExperienceDetail({}) {
   const { experiencePk } = useParams();

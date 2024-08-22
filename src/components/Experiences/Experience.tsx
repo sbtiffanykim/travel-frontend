@@ -1,8 +1,8 @@
-import { Box, Heading, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { FaPause, FaPlay, FaRegHeart, FaStar } from 'react-icons/fa';
-import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
+import ReactPlayer from 'react-player';
+import { Box, Heading, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
+import { FaPause, FaPlay, FaRegHeart, FaStar } from 'react-icons/fa';
 import { formatDuration } from '../../utils';
 
 interface IExpProps {
@@ -105,7 +105,7 @@ export default function Experience({
           <Text>({totalReviews})</Text>
           <Text>·</Text>
           <Text>
-            {formattedDuration} hour{formattedDuration > 1 ? 's' : ''}
+            {formattedDuration} hour{parseInt(formattedDuration) > 1 ? 's' : ''}
           </Text>
         </HStack>
         <Heading size={'sm'} fontWeight={'semibold'}>

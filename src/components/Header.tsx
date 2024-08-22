@@ -19,14 +19,13 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FaAirbnb } from 'react-icons/fa';
 import { MdDarkMode, MdLightMode } from 'react-icons/md';
-
 import LoginModal from './LoginModal';
 import SignupModal from './SignupModal';
 import useUser from '../lib/useUser';
 import { logOut } from '../api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
 
 export default function Header() {

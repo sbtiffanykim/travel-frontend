@@ -1,11 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import Root from './components/Root';
 import NotFound from './routes/NotFound';
-import RoomDetail from './components/Rooms/RoomDetail';
-import Home from './components/Home';
-import RoomList from './components/Rooms/RoomList';
-import ExperienceList from './components/Experiences/ExperienceList';
-import ExperienceDetail from './components/Experiences/ExperienceDetail';
+import RoomDetail from './routes/RoomDetail';
+import Home from './routes/Home';
+import RoomList from './routes/RoomList';
+import ExperienceList from './routes/ExperienceList';
+import ExperienceDetail from './routes/ExperienceDetail';
 import GithubConfirm from './routes/GithubConfirm';
 import KakaoConfirm from './routes/KakaoConfirm';
 import NaverConfirm from './routes/NaverConfirm';

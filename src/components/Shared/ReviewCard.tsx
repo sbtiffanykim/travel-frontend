@@ -1,7 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
 import { Avatar, Button, Heading, HStack, Text, VStack } from '@chakra-ui/react';
 import { IReview } from '../../types';
 import StartRating from './StarRating';
-import { useEffect, useRef, useState } from 'react';
 
 const month: { [key: number]: string } = {
   1: 'Jan',

@@ -1,6 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getRoomDetail, getRoomReviews } from '../../api';
+import { useQuery } from '@tanstack/react-query';
+import { getRoomDetail, getRoomReviews } from '../api';
 import {
   Avatar,
   Box,
@@ -23,10 +24,9 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
-import { ILinkInfo, IReview, IRoomAmenity } from '../../types';
-import { useEffect, useRef, useState } from 'react';
-import { capitalize, formatDescription } from '../../utils';
-import Reviews from '../Shared/Reviews';
+import { ILinkInfo, IReview, IRoomAmenity } from '../types';
+import { capitalize, formatDescription } from '../utils';
+import Reviews from '../components/Shared/Reviews';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();

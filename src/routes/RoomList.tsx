@@ -1,8 +1,8 @@
-import { IRoomList } from '../../types';
-import { getRoomList } from '../../api';
-import List from '../List';
-import Room from './Room';
-import RoomSkeleton from './RoomSkeleton';
+import { getRoomList } from '../api';
+import Room from '../components/Rooms/Room';
+import RoomSkeleton from '../components/Rooms/RoomSkeleton';
+import List from '../components/Shared/List';
+import { IRoomList } from '../types';
 
 export default function RoomList() {
   return (
