@@ -13,7 +13,7 @@ export default function RoomList() {
       renderItem={(room: IRoomList) => (
         <Room
           pk={room.pk}
-          imageUrl={room.photos[0].file}
+          imageUrl={room.photos[0]?.file}
           type={room.room_type}
           city={room.city}
           rating={room.rating}

@@ -10,10 +10,11 @@ import {
 } from '@chakra-ui/react';
 import { FaRegHeart, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import NoImage from '../Shared/NoImage';
 
 interface IRoomProps {
   pk: number;
-  imageUrl: string;
+  imageUrl?: string;
   type: string;
   city: string;
   rating: number;
@@ -46,7 +47,19 @@ export default function Room({
           h='280px'
           w='100%'
         >
-          <Image src={imageUrl} objectFit='cover' w='100%' h='100%' />
+          {imageUrl ? (
+            <Image src={imageUrl} objectFit='cover' w='100%' h='100%' />
+          ) : (
+            <Box
+              w='100%'
+              h='100%'
+              bgColor={'gray.100'}
+              rounded={'lg'}
+              alignContent={'center'}
+            >
+              <NoImage />
+            </Box>
+          )}
           <IconButton
             size={'lg'}
             aria-label='Add to wishlist'

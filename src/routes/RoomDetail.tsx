@@ -27,6 +27,7 @@ import {
 import { ILinkInfo, IReview, IRoomAmenity } from '../types';
 import { capitalize, formatDescription } from '../utils';
 import Reviews from '../components/Shared/Reviews';
+import NoImage from '../components/Shared/NoImage';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
@@ -78,33 +79,48 @@ export default function RoomDetail() {
       </Skeleton>
 
       {/* Room Photos */}
-      <Grid
-        templateColumns={'repeat(4, 1fr)'}
-        templateRows={'1fr 1fr'}
-        h='50vh'
-        gap={2}
-        my={5}
-        rounded='md'
-        overflow='hidden'
-      >
-        {[0, 1, 2, 3, 4].map((index: number) => {
-          const imageSrc =
-            roomData?.photos[index]?.file ||
-            roomData?.photos[index % roomData.photos.length]?.file;
-          return (
-            <GridItem
-              key={index}
-              overflow='hidden'
-              colSpan={index === 0 ? 2 : 1}
-              rowSpan={index === 0 ? 2 : 1}
-            >
-              <Skeleton isLoaded={!isRoomDataLoading} h='100%' w='100%'>
-                <Image src={imageSrc} w='100%' h='100%' objectFit='cover' />
-              </Skeleton>
-            </GridItem>
-          );
-        })}
-      </Grid>
+      {roomData?.photos && roomData.photos.length > 0 ? (
+        <Grid
+          templateColumns={'repeat(4, 1fr)'}
+          templateRows={'1fr 1fr'}
+          h='50vh'
+          gap={2}
+          my={5}
+          rounded='md'
+          overflow='hidden'
+        >
+          {[0, 1, 2, 3, 4].map((index: number) => {
+            const imageSrc =
+              roomData?.photos[index]?.file ||
+              roomData?.photos[index % roomData.photos.length]?.file;
+            return (
+              <GridItem
+                key={index}
+                overflow='hidden'
+                colSpan={index === 0 ? 2 : 1}
+                rowSpan={index === 0 ? 2 : 1}
+              >
+                <Skeleton isLoaded={!isRoomDataLoading} h='100%' w='100%'>
+                  {roomData?.photos && roomData.photos.length > 0 ? (
+                    <Image src={imageSrc} w='100%' h='100%' objectFit='cover' />
+                  ) : null}
+                </Skeleton>
+              </GridItem>
+            );
+          })}
+        </Grid>
+      ) : (
+        <Box
+          w='100%'
+          h='50vh'
+          bgColor={'gray.100'}
+          rounded={'md'}
+          alignContent={'center'}
+          my={5}
+        >
+          <NoImage />
+        </Box>
+      )}
 
       {/* Brief Room Information */}
       <Skeleton></Skeleton>

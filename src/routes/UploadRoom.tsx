@@ -50,7 +50,7 @@ export default function UploadRoom() {
         description: 'Your room is successfully uploaded',
         status: 'success',
       });
-      navigate(`rooms/${data.id}`);
+      navigate(`/rooms/${data.id}`);
     },
   });
 
@@ -141,7 +141,7 @@ export default function UploadRoom() {
             <FormLabel>Description</FormLabel>
             <Textarea {...register('description')} />
           </FormControl>
-          <FormControl isRequired>
+          <FormControl>
             <Checkbox {...register('pet_allowed')}>Pet friendly?</Checkbox>
           </FormControl>
           <FormControl isRequired>
