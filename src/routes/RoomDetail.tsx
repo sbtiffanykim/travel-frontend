@@ -30,6 +30,7 @@ import { ILinkInfo, IReview, IRoomAmenity } from '../types';
 import { capitalize, formatDescription } from '../lib/utils';
 import Reviews from '../components/Shared/Reviews';
 import NoImage from '../components/Shared/NoImage';
+import { Helmet } from 'react-helmet';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
@@ -95,6 +96,9 @@ export default function RoomDetail() {
 
   return (
     <Box mt={5} mb={20} mx={20}>
+      <Helmet>
+        <title>{roomData ? roomData.name : 'Loading...'}</title>
+      </Helmet>
       <Skeleton height='40px' width='50%' rounded='sm' isLoaded={!isRoomDataLoading}>
         <Heading fontWeight='semibold' fontSize='3xl'>
           {roomData?.name}

@@ -19,6 +19,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import { Helmet } from 'react-helmet';
 import { getExperienceDetail, getExperienceReview } from '../api';
 import { capitalize, formatDescription, formatDuration } from '../lib/utils';
 import { useEffect, useRef, useState } from 'react';
@@ -67,6 +68,9 @@ export default function ExperienceDetail({}) {
 
   return (
     <Box mt={10} mb={20} mx={10}>
+      <Helmet>
+        <title>{expData ? expData.name : 'Loading...'} </title>
+      </Helmet>
       {/* Title */}
       <VStack alignItems={'flex-start'} spacing={1}>
         <Heading fontWeight={'semibold'} size={'lg'}>

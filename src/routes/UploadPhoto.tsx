@@ -11,6 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import useRequireAuth from '../lib/useRequireAuth';
 import useRequireHost from '../lib/useRequireHost';
+import { Helmet } from 'react-helmet';
 
 export default function UploadPhoto() {
   useRequireAuth();
@@ -28,6 +29,9 @@ export default function UploadPhoto() {
     >
       <Container>
         <VStack spacing={5}>
+          <Helmet>
+            <title>Upload Photo</title>
+          </Helmet>
           <Heading>Upload Photos</Heading>
           <FormControl>
             <Input

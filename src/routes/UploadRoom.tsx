@@ -27,6 +27,7 @@ import { ICategory, IRoomAmenity, IRoomDetail } from '../types';
 import useRequireAuth from '../lib/useRequireAuth';
 import useRequireHost from '../lib/useRequireHost';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 export default function UploadRoom() {
   const { data: amenitiesData, isLoading: isAmenitiesLoading } = useQuery({
@@ -70,6 +71,9 @@ export default function UploadRoom() {
         lg: 40,
       }}
     >
+      <Helmet>
+        <title>Upload Room</title>
+      </Helmet>
       <Container>
         <Heading textAlign={'center'}>Upload Room</Heading>
         <VStack spacing={7} as={'form'} mt={5} onSubmit={handleSubmit(onSubmit)}>
