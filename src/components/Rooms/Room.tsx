@@ -8,9 +8,10 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react';
-import { FaRegHeart, FaStar } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaCamera, FaRegHeart, FaStar } from 'react-icons/fa';
+import { Link, useNavigate } from 'react-router-dom';
 import NoImage from '../Shared/NoImage';
+import React from 'react';
 
 interface IRoomProps {
   pk: number;
@@ -22,6 +23,7 @@ interface IRoomProps {
   name: string;
   bedrooms: number;
   price: number;
+  isOwner: boolean;
 }
 
 export default function Room({
@@ -34,8 +36,15 @@ export default function Room({
   name,
   bedrooms,
   price,
+  isOwner,
 }: IRoomProps) {
   const gray = useColorModeValue('gray600', 'gray.300');
+  const navigate = useNavigate();
+  const handleAddPhoto = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate(`/rooms/${pk}/photos`);
+  };
+
   return (
     <Link to={`/rooms/${pk}`}>
       <VStack spacing={-0.5} alignItems={'flex-start'}>
@@ -60,16 +69,25 @@ export default function Room({
               <NoImage />
             </Box>
           )}
-          <IconButton
-            size={'lg'}
-            aria-label='Add to wishlist'
-            icon={<FaRegHeart />}
-            color={'white'}
-            variant={'unstyled'}
-            position={'absolute'}
-            right={-3}
-            top={0}
-          ></IconButton>
+          <Box color={'gray.600'} position={'absolute'} right={-3} top={0}>
+            {isOwner ? (
+              <IconButton
+                onClick={handleAddPhoto}
+                size={'lg'}
+                aria-label='Add photos'
+                icon={<FaCamera />}
+                variant={'unstyled'}
+              />
+            ) : (
+              <IconButton
+                size={'lg'}
+                aria-label='Add to wishlist'
+                icon={<FaRegHeart />}
+                color={'white'}
+                variant={'unstyled'}
+              />
+            )}
+          </Box>
         </Box>
         <Grid templateColumns={'10fr 1fr'}>
           <Text noOfLines={1} fontSize='md' fontWeight='semibold'>

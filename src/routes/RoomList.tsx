@@ -14,6 +14,7 @@ export default function RoomList() {
         <Room
           pk={room.pk}
           imageUrl={room.photos[0]?.file}
+          isOwner={room.is_owner}
           type={room.room_type}
           city={room.city}
           rating={room.rating}
