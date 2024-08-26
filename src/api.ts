@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { QueryFunctionContext } from '@tanstack/react-query';
 import axios from 'axios';
+import { formatDate } from './utils';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:8000/api/v1/',
@@ -197,5 +198,24 @@ export const uploadRoom = async (variables: IUploadRoomVariables) => {
   } catch (error) {
     console.log(error);
     throw new Error('Failed to upload room');
+  }
+};
+
+type CheckBookingQueryKey = [string?, Date[]?, string?];
+
+export const checkAvailability = ({
+  queryKey,
+}: QueryFunctionContext<CheckBookingQueryKey>) => {
+  const [roomPk, dates, _] = queryKey;
+  if (dates) {
+    const [firstDate, secondDate] = dates;
+    const checkInDate = formatDate(firstDate);
+    const checkOutDate = formatDate(secondDate);
+    console.log(firstDate, checkInDate);
+    return instance
+      .get(
+        `rooms/${roomPk}/bookings/check?check_in=${checkInDate}&check_out=${checkOutDate}`
+      )
+      .then((response) => response.data);
   }
 };

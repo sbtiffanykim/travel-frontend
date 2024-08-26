@@ -18,3 +18,9 @@ export function formatDuration(duration?: string) {
   const formattedDuration = time % 1 === 0 ? time.toFixed(0) : time.toFixed(1);
   return formattedDuration;
 }
+
+export function formatDate(date?: Date) {
+  if (!date) return '';
+  const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  return formattedDate;
+}
