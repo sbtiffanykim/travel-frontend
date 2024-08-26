@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { getExperienceDetail, getExperienceReview } from '../api';
-import { capitalize, formatDescription, formatDuration } from '../utils';
+import { capitalize, formatDescription, formatDuration } from '../lib/utils';
 import { useEffect, useRef, useState } from 'react';
 import { IInclusion, ILinkInfo, IMedia, IReview } from '../types';
 import Reviews from '../components/Shared/Reviews';

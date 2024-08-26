@@ -27,7 +27,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { checkAvailability, getRoomDetail, getRoomReviews } from '../api';
 import { ILinkInfo, IReview, IRoomAmenity } from '../types';
-import { capitalize, formatDescription } from '../utils';
+import { capitalize, formatDescription } from '../lib/utils';
 import Reviews from '../components/Shared/Reviews';
 import NoImage from '../components/Shared/NoImage';
 

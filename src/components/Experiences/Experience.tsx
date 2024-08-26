@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import { Box, Heading, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
 import { FaPause, FaPlay, FaRegHeart, FaStar } from 'react-icons/fa';
-import { formatDuration } from '../../utils';
+import { formatDuration } from '../../lib/utils';
 
 interface IExpProps {
   pk: number;
