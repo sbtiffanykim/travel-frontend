@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   Avatar,
@@ -25,8 +25,9 @@ import {
 } from '@chakra-ui/react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import '../calendar.css';
 import { checkAvailability, getRoomDetail, getRoomReviews } from '../api';
-import { ILinkInfo, IReview, IRoomAmenity } from '../types';
+import { ILinkInfo, IReview, IRoomAmenity, IRoomDetail } from '../types';
 import { capitalize, formatDescription } from '../lib/utils';
 import Reviews from '../components/Shared/Reviews';
 import NoImage from '../components/Shared/NoImage';
@@ -93,6 +94,21 @@ export default function RoomDetail() {
   };
 
   const reviews: IReview[] = reviewData?.content ?? [];
+  const navigate = useNavigate();
+
+  const handleReserveButton = () => {
+    const reservationData = {
+      photo: roomData.photos[0].file,
+      name: roomData.name,
+      type: roomData.room_type,
+      price: roomData.price,
+      reviewAverage: roomData.rating,
+      totalReviews: reviews.length,
+      checkDates: convertedDates,
+    };
+    console.log(reservationData);
+    navigate(`/rooms/${roomData?.id}/book`, { state: reservationData });
+  };
 
   return (
     <Box mt={5} mb={20} mx={20}>
@@ -270,12 +286,14 @@ export default function RoomDetail() {
             selectRange
             value={dates}
           />
+
           <Button
             my={2}
             isDisabled={!bookingData?.available}
             isLoading={isBookingDataLoading}
             w='100%'
             colorScheme='red'
+            onClick={handleReserveButton}
           >
             Reserve
           </Button>

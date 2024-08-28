@@ -11,6 +11,7 @@ import KakaoConfirm from './routes/KakaoConfirm';
 import NaverConfirm from './routes/NaverConfirm';
 import UploadRoom from './routes/UploadRoom';
 import UploadPhoto from './routes/UploadPhoto';
+import RoomBooking from './routes/RoomBooking';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: 'rooms/:roomPk',
         element: <RoomDetail />,
+      },
+      {
+        path: 'rooms/:roomPk/book',
+        element: <RoomBooking />,
       },
       {
         path: 'rooms/:roomPk/photos',

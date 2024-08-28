@@ -211,7 +211,6 @@ export const checkAvailability = ({
     const [firstDate, secondDate] = dates;
     const checkInDate = formatDate(firstDate);
     const checkOutDate = formatDate(secondDate);
-    console.log(firstDate, checkInDate);
     return instance
       .get(
         `rooms/${roomPk}/bookings/check?check_in=${checkInDate}&check_out=${checkOutDate}`
