@@ -5,13 +5,13 @@ import {
   Grid,
   Heading,
   HStack,
-  Icon,
   Image,
   Input,
   Text,
   VStack,
+  chakra,
 } from '@chakra-ui/react';
-import Select from 'react-select';
+import Select, { SingleValue } from 'react-select';
 import { Helmet } from 'react-helmet';
 import { FaStar, FaCcPaypal } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
@@ -20,6 +20,7 @@ import { CiCreditCard1 } from 'react-icons/ci';
 import { useLocation } from 'react-router-dom';
 import useRequireAuth from '../lib/useRequireAuth';
 import { capitalize } from '../lib/utils';
+import React, { useState } from 'react';
 
 interface IReservationData {
   photo: string;
@@ -37,6 +38,7 @@ export default function RoomBooking() {
   const pageTitle = 'Confirm and pay';
   const reservationData = location.state as IReservationData;
   console.log(reservationData);
+
   const [checkInDate, checkOutDate] = reservationData.checkDates;
   const getNumberOfNights = (checkInDate: Date, checkOutDate: Date) => {
     const timeDifference = checkOutDate.getTime() - checkInDate.getTime();
@@ -47,10 +49,51 @@ export default function RoomBooking() {
   const nights = getNumberOfNights(checkInDate, checkOutDate);
   const totalPrice = reservationData.price * nights;
 
-  const paymentOptions = [
+  const ChakraSelect = chakra(Select<IPaymentOption>); // use select from react-select as chakra component
+  interface IPaymentOption {
+    value: string;
+    label: string;
+    icon: React.ElementType;
+  }
+  const paymentOptions: IPaymentOption[] = [
     { value: 'card', label: 'Credit or debit card', icon: CiCreditCard1 },
     { value: 'paypal', label: 'Paypal', icon: FaCcPaypal },
   ];
+  const customStyle = {
+    option: (provided: any) => ({
+      ...provided,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '10px',
+    }),
+    control: (provided: any) => ({
+      ...provided,
+      display: 'flex',
+      alignItems: 'center',
+      padding: '4px',
+      borderColor: '#CBD5E0', // Chakra UI gray.300 color
+      borderRadius: '5px',
+    }),
+    singleValue: (provided: any) => ({
+      ...provided,
+      display: 'flex',
+      alignItems: 'center',
+    }),
+    menu: (provided: any) => ({
+      ...provided,
+      borderColor: '#CBD5E0',
+    }),
+  };
+  const [selectedPayment, setSelectedPayment] = useState<IPaymentOption>(
+    paymentOptions[0]
+  );
+  const handleChange = (option: SingleValue<IPaymentOption>) => {
+    if (option) {
+      setSelectedPayment(option);
+    }
+  };
+
+  console.log(selectedPayment);
 
   return (
     <Box my={20} mx={10}>
@@ -143,7 +186,28 @@ export default function RoomBooking() {
             <Heading fontSize={'23px'} fontWeight={'500'} mb={5}>
               Pay with
             </Heading>
-            <Select options={paymentOptions} />
+            <ChakraSelect
+              options={paymentOptions}
+              value={selectedPayment}
+              onChange={handleChange}
+              defaultValue={paymentOptions[0]}
+              styles={customStyle}
+              formatOptionLabel={(option: IPaymentOption) => (
+                <Box
+                  display={'flex'}
+                  alignItems={'center'}
+                  color={'gray.600'}
+                  fontWeight={'500'}
+                >
+                  <Box as={option.icon} size={'23px'} mr={3} />
+                  {option.label}
+                </Box>
+              )}
+              isSearchable={false}
+              components={{ IndicatorSeparator: () => null }} // Remove the separator next to the dropdown arrow
+            />
+            {selectedPayment.value === 'card' ? 
+              <VStack></VStack> : <VStack></VStack>}
           </Box>
 
           <Divider borderColor='gray.200' border={'1'} my={10} />
