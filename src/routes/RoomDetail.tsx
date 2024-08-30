@@ -106,6 +106,8 @@ export default function RoomDetail() {
       reviewAverage: roomData.rating,
       totalReviews: reviews.length,
       checkDates: convertedDates,
+      petAllowed: roomData.pet_allowed,
+      maxCapacity: roomData.max_capacity,
     };
     console.log(reservationData);
     navigate(`/rooms/${roomData?.id}/book`, { state: reservationData });

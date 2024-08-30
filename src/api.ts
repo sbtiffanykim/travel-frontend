@@ -218,3 +218,24 @@ export const checkAvailability = ({
       .then((response) => response.data);
   }
 };
+
+interface IReserveRoomVariables {
+  pk: number;
+  check_in: string;
+  check_out: string;
+  guests: number;
+}
+
+export const reserveRoom = async (variables: IReserveRoomVariables) => {
+  try {
+    const response = await instance.post(`rooms/${variables.pk}/bookings`, variables, {
+      headers: {
+        'X-CSRFToken': Cookies.get('csrftoken') || '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Failed to upload room');
+  }
+};

@@ -13,6 +13,7 @@ import {
   chakra,
   InputGroup,
   Icon,
+  useToast,
 } from '@chakra-ui/react';
 import Select, { SingleValue } from 'react-select';
 import countryList from 'react-select-country-list';
@@ -22,9 +23,11 @@ import { MdKeyboardArrowLeft } from 'react-icons/md';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { TbPointFilled } from 'react-icons/tb';
 import { CiCreditCard1 } from 'react-icons/ci';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useRequireAuth from '../lib/useRequireAuth';
 import { capitalize } from '../lib/utils';
+import { useMutation } from '@tanstack/react-query';
+import { reserveRoom } from '../api';
 
 interface IReservationData {
   pk: number;
@@ -35,6 +38,8 @@ interface IReservationData {
   reviewAverage: number;
   totalReviews: number;
   checkDates: Date[];
+  petAllowed: boolean;
+  maxCapacity: number;
 }
 
 export default function RoomBooking() {
@@ -144,6 +149,33 @@ export default function RoomBooking() {
       setPhoneNumber(phoneNumberRef.current.value);
       phoneNumberRef.current.value = '';
     }
+  };
+
+  const navigate = useNavigate();
+  const toast = useToast();
+  const mutation = useMutation({
+    mutationFn: reserveRoom,
+    onError: (error) => {
+      toast({
+        title: 'Booking failed',
+        description: 'Please try again',
+      });
+      navigate(`/rooms/${reservationData.pk}`);
+    },
+    onSuccess: (response) => {
+      const bookingId = response.booking_id;
+      navigate(`/bookings/${bookingId}`);
+    },
+  });
+
+  const onBookingClick = () => {
+    const data = {
+      check_in: checkInDate.toISOString().split('T')[0], // YYYY-MM-DD
+      check_out: checkOutDate.toISOString().split('T')[0], // YYYY-MM-DD
+      guests: 2,
+      pk: reservationData.pk,
+    };
+    mutation.mutate(data);
   };
 
   return (
@@ -311,7 +343,14 @@ export default function RoomBooking() {
 
           <Divider borderColor='gray.200' border={'1'} my={10} />
 
-          <Button my={10} p={7} fontSize={'lg'} colorScheme='purple'>
+          <Button
+            my={10}
+            p={7}
+            fontSize={'lg'}
+            colorScheme='purple'
+            isLoading={mutation.isPending}
+            onClick={onBookingClick}
+          >
             {pageTitle}
           </Button>
         </VStack>
