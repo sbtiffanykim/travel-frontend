@@ -27,7 +27,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import '../calendar.css';
 import { checkAvailability, getRoomDetail, getRoomReviews } from '../api';
-import { ILinkInfo, IReview, IRoomAmenity, IRoomDetail } from '../types';
+import { ILinkInfo, IReview, IRoomAmenity } from '../types';
 import { capitalize, formatDescription } from '../lib/utils';
 import Reviews from '../components/Shared/Reviews';
 import NoImage from '../components/Shared/NoImage';
@@ -98,6 +98,7 @@ export default function RoomDetail() {
 
   const handleReserveButton = () => {
     const reservationData = {
+      pk: roomData.id,
       photo: roomData.photos[0].file,
       name: roomData.name,
       type: roomData.room_type,
