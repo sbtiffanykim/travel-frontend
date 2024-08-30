@@ -12,12 +12,14 @@ import {
   VStack,
   chakra,
   InputGroup,
+  Icon,
 } from '@chakra-ui/react';
 import Select, { SingleValue } from 'react-select';
 import countryList from 'react-select-country-list';
 import { Helmet } from 'react-helmet';
 import { FaStar, FaCcPaypal, FaPaypal } from 'react-icons/fa';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
+import { TiDeleteOutline } from 'react-icons/ti';
 import { TbPointFilled } from 'react-icons/tb';
 import { CiCreditCard1 } from 'react-icons/ci';
 import { Link, useLocation } from 'react-router-dom';
@@ -134,6 +136,16 @@ export default function RoomBooking() {
   };
   const CountrySelect = chakra(Select<ICountryOption>);
 
+  const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const phoneNumberRef = useRef<HTMLInputElement>(null);
+
+  const handleAddBtn = () => {
+    if (phoneNumberRef.current) {
+      setPhoneNumber(phoneNumberRef.current.value);
+      phoneNumberRef.current.value = '';
+    }
+  };
+
   return (
     <Box my={20} mx={10}>
       <Helmet>
@@ -189,6 +201,21 @@ export default function RoomBooking() {
             <Text fontSize={'14px'}>
               Add and confirm your phone number to get trip updates.
             </Text>
+            <InputGroup mt={2}>
+              <Input type='string' mr={2} ref={phoneNumberRef} />
+              <Button onClick={handleAddBtn}>Add</Button>
+            </InputGroup>
+            {phoneNumber ? (
+              <HStack
+                mt={4}
+                display={'flex'}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+              >
+                <Text>{phoneNumber}</Text>
+                <Icon as={TiDeleteOutline} onClick={() => setPhoneNumber('')} />
+              </HStack>
+            ) : null}
           </Box>
 
           <Divider borderColor='gray.200' border={'1'} my={10} />
