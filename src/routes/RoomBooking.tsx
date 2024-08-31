@@ -164,6 +164,7 @@ export default function RoomBooking() {
     },
     onSuccess: (response) => {
       const bookingId = response.booking_id;
+
       navigate(`/bookings/${bookingId}`);
     },
   });

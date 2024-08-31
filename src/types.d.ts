@@ -31,6 +31,7 @@ export interface IRoomHost {
   pk: number;
   username: string;
   profile_picture: string;
+  email: string;
 }
 
 export interface IRoomReviewUser extends IRoomHost {
@@ -52,8 +53,6 @@ export interface ICategory {
 
 export interface IRoomDetail extends IRoomList {
   id: number;
-  host: IRoomHost;
-  amenities: IRoomAmenity;
   host: IRoomHost;
   amenities: IRoomAmenity[];
   category: {
