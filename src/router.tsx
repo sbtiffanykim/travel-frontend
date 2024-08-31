@@ -12,6 +12,7 @@ import NaverConfirm from './routes/NaverConfirm';
 import UploadRoom from './routes/UploadRoom';
 import UploadPhoto from './routes/UploadPhoto';
 import RoomBooking from './routes/RoomBooking';
+import RoomBookingConfirmation from './routes/RoomBookingConfirmation';
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: 'experiences/:experiencePk',
         element: <ExperienceDetail />,
+      },
+      {
+        path: 'bookings/:roomPk',
+        element: <RoomBookingConfirmation />,
       },
       {
         path: 'social',

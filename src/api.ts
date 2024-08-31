@@ -239,3 +239,8 @@ export const reserveRoom = async (variables: IReserveRoomVariables) => {
     throw new Error('Failed to upload room');
   }
 };
+
+export const getConfirmedBooking = ({ queryKey }: QueryFunctionContext) => {
+  const [_, pk] = queryKey;
+  return instance.get(`bookings/${pk}`).then((response) => response.data);
+};
