@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
   Avatar,
@@ -238,16 +238,29 @@ export default function RoomDetail() {
           </Grid>
 
           {/* Host Information */}
-          <HStack gap={1}>
-            <Avatar src={roomData?.host.profile_picture} size='md' />
-            <Grid templateRows={'1fr 1fr'}>
-              <Heading fontWeight='semibold' fontSize={'17'}>
-                Hosted by {capitalize(roomData?.host.username)}
-              </Heading>
-              <Text color='gray.600' fontSize={'14'}>
-                Hosted for 0 year
-              </Text>
-            </Grid>
+          <HStack justifyContent={'space-between'}>
+            <HStack gap={1}>
+              <Avatar
+                src={roomData?.host.profile_picture}
+                size='md'
+                bgColor={'blue.200'}
+              />
+              <Grid templateRows={'1fr 1fr'}>
+                <Heading fontWeight='semibold' fontSize={'17'}>
+                  Hosted by {capitalize(roomData?.host.username)}
+                </Heading>
+                <Text color='gray.600' fontSize={'14'}>
+                  Hosted for 0 year
+                </Text>
+              </Grid>
+            </HStack>
+            {roomData?.is_owner ? (
+              <Link to={`/rooms/${roomPk}/edit`}>
+                <Button variant={'outline'} colorScheme='blue' p={2}>
+                  Edit room
+                </Button>
+              </Link>
+            ) : null}
           </HStack>
 
           <Divider borderColor='gray.200' border={'2'} mt={10} />
@@ -345,6 +358,7 @@ export default function RoomDetail() {
               maxCapacity={maxCapacity}
             />
           </Box>
+
           <Button
             my={2}
             isDisabled={!bookingData?.available}
