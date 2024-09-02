@@ -24,18 +24,19 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import Calendar from 'react-calendar';
+import { Helmet } from 'react-helmet';
 import 'react-calendar/dist/Calendar.css';
 import '../calendar.css';
 import { checkAvailability, getRoomDetail, getRoomReviews } from '../api';
-import { ILinkInfo, IReview, IRoomAmenity } from '../types';
+import { ILinkInfo, IReview, IRoomAmenity, IRoomDetail } from '../types';
 import { capitalize, formatDescription } from '../lib/utils';
 import Reviews from '../components/Shared/Reviews';
 import NoImage from '../components/Shared/NoImage';
-import { Helmet } from 'react-helmet';
+import GuestSelector from '../components/Shared/GuestSelector';
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
-  const { data: roomData, isLoading: isRoomDataLoading } = useQuery({
+  const { data: roomData, isLoading: isRoomDataLoading } = useQuery<IRoomDetail>({
     queryKey: ['room', roomPk],
     queryFn: getRoomDetail,
   });
@@ -98,19 +99,55 @@ export default function RoomDetail() {
 
   const handleReserveButton = () => {
     const reservationData = {
-      pk: roomData.id,
-      photo: roomData.photos[0].file,
-      name: roomData.name,
-      type: roomData.room_type,
-      price: roomData.price,
-      reviewAverage: roomData.rating,
+      pk: roomData?.id,
+      photo: roomData?.photos[0].file,
+      name: roomData?.name,
+      type: roomData?.room_type,
+      price: roomData?.price,
+      reviewAverage: roomData?.rating,
       totalReviews: reviews.length,
       checkDates: convertedDates,
-      petAllowed: roomData.pet_allowed,
-      maxCapacity: roomData.max_capacity,
+      petAllowed: roomData?.pet_allowed,
+      maxCapacity: roomData?.max_capacity,
+      guests: adults,
     };
     console.log(reservationData);
     navigate(`/rooms/${roomData?.id}/book`, { state: reservationData });
+  };
+
+  const maxCapacity = roomData?.max_capacity ?? 0;
+  const [adults, setAdults] = useState<number>(0);
+  const [children, setChildren] = useState<number>(0);
+
+  useEffect(() => {
+    // Update the adults value when the maxCapacity is defined
+    if (maxCapacity > 0) {
+      setAdults(maxCapacity);
+    }
+  }, [maxCapacity]);
+
+  const handleIncrementAdults = () => {
+    if (adults + children < maxCapacity) {
+      setAdults((prevcount) => prevcount + 1);
+    }
+  };
+
+  const handleIncrementChildren = () => {
+    if (adults + children < maxCapacity) {
+      setChildren((prevCount) => prevCount + 1);
+    }
+  };
+
+  const handleDecrementAdults = () => {
+    if (adults > 0) {
+      setAdults((prevCount) => prevCount - 1);
+    }
+  };
+
+  const handleDecrementChildren = () => {
+    if (children > 0) {
+      setChildren((prevCount) => prevCount - 1);
+    }
   };
 
   return (
@@ -290,6 +327,24 @@ export default function RoomDetail() {
             value={dates}
           />
 
+          <Box>
+            <GuestSelector
+              label={'Adults'}
+              description={'Age 13+'}
+              count={adults}
+              onIncrement={handleIncrementAdults}
+              onDecrement={handleDecrementAdults}
+              maxCapacity={maxCapacity}
+            />
+            <GuestSelector
+              label={'Children'}
+              description={'Ages 2-12'}
+              count={children}
+              onIncrement={handleIncrementChildren}
+              onDecrement={handleDecrementChildren}
+              maxCapacity={maxCapacity}
+            />
+          </Box>
           <Button
             my={2}
             isDisabled={!bookingData?.available}
@@ -313,7 +368,7 @@ export default function RoomDetail() {
 
       {/* reviews */}
       <Reviews
-        totalRating={roomData?.rating}
+        totalRating={roomData?.rating ?? 0}
         reviews={reviews}
         isReviewsLoading={isReviewsLoading}
         onReviewOpen={onReviewOpen}

@@ -40,6 +40,7 @@ interface IReservationData {
   checkDates: Date[];
   petAllowed: boolean;
   maxCapacity: number;
+  guests: number;
 }
 
 export default function RoomBooking() {
@@ -173,7 +174,7 @@ export default function RoomBooking() {
     const data = {
       check_in: checkInDate.toISOString().split('T')[0], // YYYY-MM-DD
       check_out: checkOutDate.toISOString().split('T')[0], // YYYY-MM-DD
-      guests: 2,
+      guests: reservationData?.guests,
       pk: reservationData.pk,
     };
     mutation.mutate(data);
@@ -215,7 +216,7 @@ export default function RoomBooking() {
             <Grid templateColumns={'4fr 1fr'} w='100%' fontSize={'17px'}>
               <VStack spacing={1} alignItems={'flex-start'}>
                 <Text fontWeight={'500'}>Guests</Text>
-                <Text fontSize={'16px'}>2</Text>
+                <Text fontSize={'16px'}>{reservationData?.guests}</Text>
               </VStack>
               <Button variant={'none'} textDecoration={'underline'}>
                 Edit

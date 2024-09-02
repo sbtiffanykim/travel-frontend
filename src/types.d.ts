@@ -61,8 +61,8 @@ export interface IRoomDetail extends IRoomList {
     kind: string;
   };
   is_liked: false;
-  bathrooms: string;
-  beds: string;
+  bathrooms: number;
+  beds: number;
   address: string;
   pet_allowed: boolean;
   max_capacity: number;
