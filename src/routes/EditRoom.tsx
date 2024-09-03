@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Checkbox,
   Container,
   FormControl,
@@ -13,26 +14,32 @@ import {
   Select,
   Text,
   Textarea,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Helmet } from 'react-helmet';
-import { getAmenities, getCategories, getRoomDetail } from '../api';
+import IEditRoomVariables, {
+  editRoom,
+  getAmenities,
+  getCategories,
+  getRoomDetail,
+} from '../api';
 import useRequireAuth from '../lib/useRequireAuth';
 import useRequireHost from '../lib/useRequireHost';
 import { ICategory, IRoomAmenity, IRoomDetail } from '../types';
 import { FaBed, FaDollarSign, FaToilet } from 'react-icons/fa';
 import { FaPerson } from 'react-icons/fa6';
 import { MdBedroomParent } from 'react-icons/md';
+import React from 'react';
 
 export default function EditRoom() {
   useRequireAuth();
   useRequireHost();
 
-  const params = useParams();
-  const { roomPk } = params;
+  const { roomPk } = useParams();
   const { data: roomData, isLoading } = useQuery<IRoomDetail>({
     queryFn: getRoomDetail,
     queryKey: ['room', roomPk],
@@ -47,7 +54,42 @@ export default function EditRoom() {
   });
 
   const amenities = amenitiesData?.content as IRoomAmenity[];
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, setValue } = useForm<IEditRoomVariables>({
+    defaultValues: {
+      category: roomData?.category?.pk,
+      room_type: roomData?.room_type,
+    },
+  });
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue('category', Number(event.target.value));
+  };
+
+  const handleRoomTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setValue('room_type', event.target.value);
+  };
+
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const mutation = useMutation({
+    mutationFn: editRoom,
+    onError: () => {},
+    onSuccess: (data: IRoomDetail) => {
+      toast({
+        title: 'Room Edited',
+        description: 'Your room is successfully updated!',
+        status: 'success',
+      });
+      navigate(`/rooms/${data.id}`);
+    },
+  });
+
+  const onSubmit = (data: IEditRoomVariables) => {
+    if (roomPk) {
+      mutation.mutate({ ...data, pk: roomPk });
+    }
+  };
 
   return (
     <Box
@@ -65,7 +107,7 @@ export default function EditRoom() {
         <Heading fontSize={'md'} fontWeight={'semibold'} textAlign={'center'}>
           Edit room
         </Heading>
-        <VStack spacing={5}>
+        <VStack spacing={5} as={'form'} onSubmit={handleSubmit(onSubmit)}>
           <FormControl isRequired>
             <FormLabel>name</FormLabel>
             <Input
@@ -173,9 +215,10 @@ export default function EditRoom() {
           <FormControl isRequired>
             <FormLabel>Room Type</FormLabel>
             <Select
-              value={roomData?.room_type}
+              defaultValue={roomData?.room_type}
               placeholder='Choose your room type'
               {...register('room_type', { required: true })}
+              onChange={handleRoomTypeChange}
             >
               <option value='entire_place'>Entire Place</option>
               <option value='private_room'>Private Room</option>
@@ -185,9 +228,10 @@ export default function EditRoom() {
           <FormControl isRequired>
             <FormLabel>Category</FormLabel>
             <Select
-              value={roomData?.category.pk}
+              defaultValue={roomData?.category.pk}
               placeholder='Choose your room category'
               {...register('category', { required: true })}
+              onChange={handleCategoryChange}
             >
               {categories?.map((category) => (
                 <option key={category.pk} value={category.pk}>
@@ -202,6 +246,9 @@ export default function EditRoom() {
               {amenities?.map((amenity) => (
                 <Box key={amenity.pk}>
                   <Checkbox
+                    defaultChecked={Boolean(
+                      roomData?.amenities.find((item) => item.pk === amenity.pk)
+                    )}
                     value={amenity.pk}
                     {...register('amenities', { required: true })}
                   >
@@ -212,6 +259,16 @@ export default function EditRoom() {
               ))}
             </Grid>
           </FormControl>
+          {mutation.error ? <Text>{mutation.error.message}</Text> : null}
+          <Button
+            isLoading={mutation.isPending}
+            type='submit'
+            colorScheme='red'
+            size='lg'
+            w='100%'
+          >
+            Edit Room
+          </Button>
         </VStack>
       </Container>
     </Box>

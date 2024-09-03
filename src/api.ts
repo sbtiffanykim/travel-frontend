@@ -244,3 +244,21 @@ export const getConfirmedBooking = ({ queryKey }: QueryFunctionContext) => {
   const [_, pk] = queryKey;
   return instance.get(`bookings/${pk}`).then((response) => response.data);
 };
+
+export default interface IEditRoomVariables extends IUploadRoomVariables {
+  pk: string;
+}
+
+export const editRoom = async (variables: IEditRoomVariables) => {
+  try {
+    const response = await instance.put(`rooms/${variables.pk}`, variables, {
+      headers: {
+        'X-CSRFToken': Cookies.get('csrftoken') || '',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Failed to upload room');
+  }
+};

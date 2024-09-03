@@ -340,7 +340,7 @@ export default function RoomDetail() {
             value={dates}
           />
 
-          <Box>
+          <Box pt={5}>
             <GuestSelector
               label={'Adults'}
               description={'Age 13+'}
