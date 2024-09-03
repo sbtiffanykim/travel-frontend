@@ -21,17 +21,15 @@ const router = createBrowserRouter([
     element: <Root />,
     errorElement: <NotFound />,
     children: [
+      // Home Page
       {
         path: '',
         element: <Home />,
       },
+      // Rooms
       {
         path: 'rooms',
         element: <RoomList />,
-      },
-      {
-        path: 'experiences',
-        element: <ExperienceList />,
       },
       {
         path: 'rooms/upload',
@@ -53,14 +51,21 @@ const router = createBrowserRouter([
         path: 'rooms/:roomPk/photos',
         element: <UploadPhoto />,
       },
+      // Experiences
+      {
+        path: 'experiences',
+        element: <ExperienceList />,
+      },
       {
         path: 'experiences/:experiencePk',
         element: <ExperienceDetail />,
       },
+      // Bookings
       {
         path: 'bookings/:roomPk',
         element: <RoomBookingConfirmation />,
       },
+      // Social
       {
         path: 'social',
         children: [
